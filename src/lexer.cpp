@@ -2,6 +2,7 @@
 #include<vector>    // std::vector<>
 #include<string>    // std::string
 #include<algorithm> // std::find()
+#include<stdexcept> // std::out_of_range()
 #include "wonderwall.hpp"  // TT(token types), KEYWORDS[4]
 
 namespace lexer {
@@ -13,59 +14,65 @@ namespace lexer {
             : token(tok), type(typ) {}
     };
 
+    class Lexer{
+        private:
 
-    bool is_int(std::string &str) {
-        return str.find_first_not_of("0123456789") == std::string::npos;
-    }
-    bool is_float(std::string &str) {
-        return str.find_first_not_of("0123456789.") == std::string::npos;
-    }
+            int idx = 0;            // index of the text string
+            int quote_count = 0;    // count of the char '
 
-    std::string get_type(std::string &str) {
-        if (str == "\n")
-            return TT_EOF;
-
-        else if (std::find(KEYWORDS, KEYWORDS + 4, str) != KEYWORDS + 4)
-            return TT_KW;
-
-        else if (str[0] == '\'' && str.back() == '\'')
-            return TT_STR;
-
-        else if (is_int(str))
-            return TT_INT;
-
-        else if (is_float(str))
-            return TT_FLOAT;
-
-        else
-            return TT_ID;
-
-    }
-
-    std::vector<Token> tokenize(std::string &text){
-        std::vector<Token> tokens;  // return: tokens
-
-        int i = 0;              // index of the text string
-        int quote_count = 0;    // count of the char '
-
-        std::string lastchar;   // variable to store the last token
-        while (i < text.length()) {
-            if (text[i] == '\'') quote_count++;
-
-            if ((text[i] == ' '||text[i] == '\n') && quote_count % 2 == 0)
-            {
-                tokens.push_back(Token(lastchar, get_type(lastchar)));
-                lastchar.clear();
-
-                if(text[i] == '\n')
-                    tokens.push_back(Token("\n", TT_EOF));
+            bool is_int(std::string &str) {
+                return str.find_first_not_of("0123456789") == std::string::npos;
             }
-            else lastchar += text[i];
-            i++;
-        }
+            bool is_float(std::string &str) {
+                return str.find_first_not_of("0123456789.") == std::string::npos;
+            }
 
-        return tokens;
+            std::string get_type(std::string &str) {
+                if (str == "\n")
+                    return TT_EOF;
 
-    }
+                else if (std::find(KEYWORDS, KEYWORDS + 4, str) != KEYWORDS + 4)
+                    return TT_KW;
+
+                else if (str[0] == '\'' && str.back() == '\'')
+                    return TT_STR;
+
+                else if (is_int(str))
+                    return TT_INT;
+
+                else if (is_float(str))
+                    return TT_FLOAT;
+
+                else
+                    return TT_ID;
+
+            }
+        public:
+
+            std::string &text;
+            Lexer(std::string &t) : text(t){}
+
+            Token get_tok(){    // get/return next token
+                if (idx >= text.length())
+                    throw std::out_of_range("text[idx] out of range");
+                if (text[idx] == '\n'){
+                    idx++;
+                    return Token("\n", TT_EOF);
+                }
+                std::string cur_word;    // variable to store the current token
+                while(!((text[idx] == ' '||text[idx] == '\n') && quote_count % 2 == 0)){
+                    if (text[idx] == '\'') quote_count++;
+                    else cur_word += text[idx];
+                    idx++;
+                }
+
+                if (text[idx] == ' ')
+                    idx++; // skip empty token
+
+                Token tok = Token(cur_word, get_type(cur_word));
+                cur_word.clear();
+                return tok;
+            };
+    };
 
 }
