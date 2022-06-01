@@ -1,9 +1,7 @@
-#include<iostream>  // std::cout<<
-#include<vector>    // std::vector<>
 #include<string>    // std::string
 #include<algorithm> // std::find()
 #include<stdexcept> // std::out_of_range()
-#include "wonderwall.hpp"  // TT(token types), KEYWORDS[4]
+#include "wonderwall.hpp"  // TT(token types), KEYWORDS={}
 
 namespace lexer {
 
@@ -28,10 +26,7 @@ namespace lexer {
             }
 
             std::string get_type(std::string &str) {
-                if (str == "\n")
-                    return TT_EOF;
-
-                else if (std::find(KEYWORDS, KEYWORDS + 4, str) != KEYWORDS + 4)
+                if (std::find(KEYWORDS, KEYWORDS + 5, str) != KEYWORDS + 5)
                     return TT_KW;
 
                 else if (str[0] == '\'' && str.back() == '\'')
@@ -49,18 +44,19 @@ namespace lexer {
             }
         public:
 
-            std::string &text;
-            Lexer(std::string &t) : text(t){}
+            const std::string &text;
+            const int text_len = text.length();
+            Lexer(const std::string &t) : text(t){}
 
             Token get_tok(){    // get/return next token
-                if (idx >= text.length())
+                if (idx >= text_len)
                     throw std::out_of_range("text[idx] out of range");
-                if (text[idx] == '\n'){
+                if (text[idx] == '\n') {
                     idx++;
                     return Token("\n", TT_EOF);
                 }
                 std::string cur_word;    // variable to store the current token
-                while(!((text[idx] == ' '||text[idx] == '\n') && quote_count % 2 == 0)){
+                while(text[idx] != ' '&&text[idx] != '\n' || quote_count % 2 != 0){
                     if (text[idx] == '\'') quote_count++;
                     else cur_word += text[idx];
                     idx++;
@@ -69,9 +65,7 @@ namespace lexer {
                 if (text[idx] == ' ')
                     idx++; // skip empty token
 
-                Token tok = Token(cur_word, get_type(cur_word));
-                cur_word.clear();
-                return tok;
+                return Token(cur_word, get_type(cur_word));
             };
     };
 
