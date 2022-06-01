@@ -16,11 +16,10 @@ std::string readFile(const char* filename) {
 
 int main(int argc, char *argv[]){
     std::string text = readFile(argv[1]);   // code from the target file
-
-    auto tokens = lexer::tokenize(text);
+    lexer::Lexer lexer(text);
 
     std::vector<parser::ExprAST> AST;
-    parser::Parser parser(tokens, AST);
+    parser::Parser parser(lexer, AST);
     parser.parse();
 
 }
