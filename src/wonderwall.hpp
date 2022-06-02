@@ -8,4 +8,5 @@
 #define TT_STR    "STR"    // Constant string
 #define TT_OP     "OP"     // Operator
 
-const std::string KEYWORDS[4] = {"print", "store", "if", "else"};
+const std::string KEYWORDS[5] = {"print", "store", "if", "else", "end"};
+const std::string OPERATORS[5] = {"+", "-", "*", "/", "="};
