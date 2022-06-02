@@ -1,6 +1,7 @@
 #include<vector>  // std::vector<>
 #include<string>  // std::string
 #include<memory>  // std::unique_ptr<>
+#include<iostream>
 #include<stdexcept>
 
 namespace parser {
@@ -11,12 +12,23 @@ namespace parser {
     };
 
     class PrintNode : public ExprAST {
-        std::string name = "print";
+        std::string node_name = "print";
         std::vector<lexer::Token> &expr;
 
         public:
             PrintNode(std::vector<lexer::Token> &expression)
             : expr(expression) {}
+            
+    };
+
+    class StoreNode : public ExprAST {
+        std::string node_name = "store";
+        std::string &name;
+        std::vector<lexer::Token> &expr;
+
+        public:
+            StoreNode(std::string &var_name, std::vector<lexer::Token> &expression)
+            :  name(var_name), expr(expression) {}
             
     };
 
@@ -70,23 +82,26 @@ namespace parser {
             lexer::Token cur_tok;              // current token
             lexer::Lexer &lexer;
 
-            void adv() {
+            void adv() {  // get next token for the recursion
                 try {
                     cur_tok = lexer.get_tok();
                 }
                 catch(std::out_of_range) {
-                    exit (EXIT_FAILURE);
+                    exit(1);
                 }
             }
 
-            std::vector<lexer::Token> parse_expr(){
+            std::vector<lexer::Token> get_expr() {
                 std::vector<lexer::Token> expr;
                 while(cur_tok.type != TT_EOF){
                     adv();
-                    std::cout<<cur_tok.token<<" ";
                     expr.push_back(cur_tok);
                 }
                 return expr;
+            }
+
+            void parse_expr() {
+                
             }
 
             void parse_kw()
@@ -95,41 +110,42 @@ namespace parser {
                     /*  print_node
                             |
                            expr    */
-                    std::cout<<"print: ";
-                    parse_expr();
-                    // PrintNode(parse_expr());
+                    get_expr();
+
                 }
 
                 else if (cur_tok.token == "store") {
                     /*  store_node
                           /    \
                         name   expr */
-                    std::cout<<"store: ";
                     adv();
-                    parse_expr();
-                    // StoreNode(parse_expr());
+                    std::string name = cur_tok.token;
+                    get_expr();
+
                 }
 
                 else if (cur_tok.token == "if") {
                     /*  if_node
                          /  \
                       cond  child_stmts */
+
+                    get_expr();
                     std::vector<lexer::Token> child_stmts;
-                    int if_count;
-                    while (if_count != 0){
+                    int if_count = 1;
+                    while(if_count != 0) {
                         adv();
-                        if (cur_tok.token == "if") if_count++;
-                        else if (cur_tok.token == "end") if_count--;
+                        if(cur_tok.token == "if")
+                            if_count += 1;
+                        else if (cur_tok.token == "end")
+                            if_count -= 1;
                         child_stmts.push_back(cur_tok);
                     }
-                    std::cout<<"if: ";
-                    parse_expr();
+                    // parse expr
                 }
             }
 
 
         public:
-
             /*
                 store, msg, 10, +, 20, \n, print, msg, \n
                 [store, KW], [msg, ID], [10, INT], [+, OP], [20, INT],
@@ -140,7 +156,7 @@ namespace parser {
 
             Parser(lexer::Lexer &lex, std::vector<ExprAST> &ast)
             : lexer(lex), AST(ast){}
-            int time = 0;
+
             void parse(){
                 adv();
 
