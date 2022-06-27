@@ -1,9 +1,3 @@
-#include<vector>  // std::vector<>
-#include<string>  // std::string
-#include<memory>  // std::unique_ptr<> std::shared_ptr
-#include "error.cpp"
-
-
 namespace parser {
 
     class BaseNode{
