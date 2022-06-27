@@ -1,8 +1,9 @@
+#include<iostream>  // std::cout<<
+#include<vector>    // std::vector<>
 #include<string>    // std::string
 #include<algorithm> // std::find()
-#include<stdexcept> // std::out_of_range()
-#include<iostream>
-#include "wonderwall.hpp"  // TT(token types), KEYWORDS={}
+#include "wonderwall.hpp"  // TT(token types), KEYWORDS[4]
+
 
 namespace lexer {
 
@@ -12,6 +13,8 @@ namespace lexer {
             Token(std::string tok = " ", std::string typ = TT_MPT)
             : token(tok), type(typ) {}
     };
+
+
     bool is_int(const std::string &str) {
         std::string::const_iterator it = str.begin();
         while (it != str.end() && std::isdigit(*it)) ++it;
@@ -40,35 +43,30 @@ namespace lexer {
         else return TT_ID;
     }
 
-    class Lexer{
-        private:
+    std::vector<Token> tokenize(std::string &text){
+        std::vector<Token> tokens;  // return: tokens
+        int quote_count;            // count of the char '
 
-            int idx = 0;            // index of the text string
-            int quote_count = 0;    // count of the char '
+        std::string lastchar;       // variable to store the last token
+        for (int i = 0; i < text.length(); i++) {
+            if (text[i] == '#') break;
+            if (text[i] == '\'') quote_count++;
 
-        public:
-            const std::string &text;
-            const int text_len = text.length();
-            Lexer(const std::string &t) : text(t){}
+            if ((text[i] == ' '||text[i] == '\n') && quote_count % 2 == 0)
+            {
+                //if (lastchar != " ")
+                    tokens.push_back(Token(lastchar, get_type(lastchar)));
 
-            Token get_tok(){    // get/return next token
-                if (idx >= text_len)
-                    throw std::out_of_range("text[idx] out of range");
-                if (text[idx] == '\n') {
-                    idx++;
-                    return Token("\n", TT_EOF);
-                }
-                while (text[idx] == ' ') idx++; // skip any white space
+                lastchar.clear();
 
-                std::string cur_word;    // variable to store the current token
-                while(text[idx] != ' '&&text[idx] != '\n' || quote_count % 2 != 0){
-                    if (text[idx] == '\'') quote_count++;
-                    else cur_word += text[idx];
-                    idx++;
-                }
+                if(text[i] == '\n')
+                    tokens.push_back(Token("\n", TT_EOF));
+            }
+            else lastchar += text[i];
+        }
 
-                return Token(cur_word, get_type(cur_word));
-            };
-    };
+        return tokens;
+
+    }
 
 }
