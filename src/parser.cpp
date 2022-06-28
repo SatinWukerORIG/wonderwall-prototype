@@ -18,20 +18,11 @@ namespace parser {
     class StoreNode : public BaseNode{
         public:
             const std::string name = "store";
-            const std::string &var_name;
-            const std::vector<lexer::Token> &expr;
+            const std::string &var_name = "";
+            const std::vector<lexer::Token> &expr {};
             StoreNode(std::string &var_name, const std::vector<lexer::Token> &expr)
             : var_name(var_name), expr(expr) {}
     };
-
-    void insert_node(std::vector<BaseNode*> &branch, BaseNode* node){
-        /*
-            branch
-              |
-             node
-        */
-        branch.push_back(node);
-    }
 
     class Parser {
         private:
@@ -39,7 +30,6 @@ namespace parser {
             std::vector<std::vector<lexer::Token>> &tokens;
 
         public:
-
             std::vector<BaseNode*> &AST;
 
             Parser(std::vector<std::vector<lexer::Token>> &tokens, std::vector<BaseNode*> &AST)
@@ -51,8 +41,7 @@ namespace parser {
                                 |
                                expr    */
                         std::vector<lexer::Token> expr {tokens[idx][1], tokens[idx].back()};
-                        BaseNode *printnode = new PrintNode(expr);
-                        insert_node(AST, printnode);
+                        AST.push_back(new PrintNode(expr));
                     }
 
                     else if (tokens[idx][0].token == "store") {
@@ -60,8 +49,7 @@ namespace parser {
                             /    \
                           name   expr */
                         std::vector<lexer::Token> expr {tokens[idx][2], tokens[idx].back()};
-                        BaseNode *storenode = new StoreNode(tokens[idx][1].token, expr);
-                        insert_node(AST, storenode);
+                        AST.push_back(new StoreNode(tokens[idx][1].token, expr));
                     }
 
                     else if (tokens[idx][0].token == "if") {
