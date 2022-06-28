@@ -1,5 +1,4 @@
 #include<fstream>
-#include<iostream>
 #include "lexer.cpp"
 #include "parser.cpp"
 #include "intpr.cpp"
@@ -37,7 +36,7 @@ int main(int argc, char *argv[]){
         showlist(it1);
     }
 
-    std::vector<parser::BaseNode*> AST;
+    std::vector<parser::BaseNode*> AST {};
     parser::Parser parser(tokens, AST);
 
     intpr::interpret(AST);
