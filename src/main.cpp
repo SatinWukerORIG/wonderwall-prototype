@@ -1,3 +1,4 @@
+#include<time.h>
 #include<fstream>
 #include "lexer.cpp"
 #include "parser.cpp"
@@ -18,6 +19,7 @@ std::vector<std::vector<lexer::Token>> readFile(const char* fname) {
 }
 
 int main(int argc, char *argv[]){
+    int start = clock();
     auto tokens = readFile(argv[1]);   // code from the target file
 
     // for(auto it1: tokens){
@@ -28,5 +30,7 @@ int main(int argc, char *argv[]){
 
     intpr::interpret(*AST);
     delete AST;
+
+    std::cout<<"\nexecution time: "<<((float)clock() - start)/1000000<<"seconds.\n";
 
 }
