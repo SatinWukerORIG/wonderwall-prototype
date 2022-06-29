@@ -6,10 +6,8 @@ namespace parser {
     };
 
     class PrintNode : public BaseNode{
-        std::vector<lexer::Token> expr;
-
         public:
-            const std::string name = "print";
+            std::vector<lexer::Token> expr;
             PrintNode(std::vector<lexer::Token> expr)
             : expr(expr) {}
 
@@ -17,52 +15,53 @@ namespace parser {
 
     class StoreNode : public BaseNode{
         public:
-            const std::string name = "store";
-            const std::string &var_name = "";
-            const std::vector<lexer::Token> &expr {};
-            StoreNode(std::string &var_name, const std::vector<lexer::Token> &expr)
+            std::string var_name;
+            std::vector<lexer::Token> expr {};
+            StoreNode(std::string var_name, std::vector<lexer::Token> expr)
             : var_name(var_name), expr(expr) {}
     };
 
     class Parser {
         private:
-            int idx;
-            std::vector<std::vector<lexer::Token>> &tokens;
+            int idx = 0;
+            std::vector<std::vector<lexer::Token>> *tokens = new std::vector<std::vector<lexer::Token>>();
 
         public:
-            std::vector<BaseNode*> &AST;
+            std::vector<BaseNode*> *AST = new std::vector<BaseNode*>();
 
-            Parser(std::vector<std::vector<lexer::Token>> &tokens, std::vector<BaseNode*> &AST)
+            Parser(std::vector<std::vector<lexer::Token>> *tokens,
+                std::vector<BaseNode*> *AST)
             : tokens(tokens), AST(AST)
             {
-                while (idx < tokens.size()) {
-                    if (tokens[idx][0].token == "print") {
+                while (idx < tokens->size()) {
+                    if (tokens->at(idx)[0].token == "print") {
                         /*  print_node
                                 |
                                expr    */
-                        std::vector<lexer::Token> expr {tokens[idx][1], tokens[idx].back()};
-                        AST.push_back(new PrintNode(expr));
+                        // std::cout<<"debug: print\n";
+                        AST->push_back(new PrintNode(
+                            {tokens->at(idx)[1], tokens->at(idx).back()}));
                     }
 
-                    else if (tokens[idx][0].token == "store") {
+                    else if (tokens->at(idx)[0].token == "store") {
                         /* store_node
                             /    \
                           name   expr */
-                        std::vector<lexer::Token> expr {tokens[idx][2], tokens[idx].back()};
-                        AST.push_back(new StoreNode(tokens[idx][1].token, expr));
+                        // std::cout<<"debug: store\n";
+                        AST->push_back(new StoreNode(tokens->at(idx)[1].token,
+                            {tokens->at(idx)[2], tokens->at(idx).back()}));
                     }
 
-                    else if (tokens[idx][0].token == "if") {
-                        /*
-                              if_node
-                            /    |    \
-                            cond stmts else
-                        */
-                    }
+                    // else if (tokens[idx][0].token == "if") {
+                    //     /*
+                    //           if_node
+                    //         /    |    \
+                    //         cond stmts else
+                    //     */
+                    // }
                     idx++;
                 }
             }
 
     };
-
 }
