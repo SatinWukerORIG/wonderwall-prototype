@@ -1,2 +1,2 @@
-store 'Hello, hello, its good to be back'
+store msg 'Hello, hello, its good to be back'
 print msg
