@@ -5,33 +5,31 @@
 #include "parser.cpp"
 #include "intpr.cpp"
 
-std::vector<std::vector<lexer::Token>> readFile(const char* fname) {
-    std::string line;
+std::string readFile(const char* fname) {
+    std::string line, content;
     std::ifstream file(fname);
-    std::vector<std::vector<lexer::Token>> tokens;
 
     while (getline(file, line)) {
-        line += "\n";
-        tokens.push_back(lexer::tokenize(line));
+        content = line + "\n";
     }
     file.close();
 
-    return tokens;
+    return content;
 }
 
 int main(int argc, char *argv[]){
     int start = clock();
-    auto tokens = readFile(argv[1]);   // code from the target file
+    std::string src = readFile(argv[1]);
+    auto tokens = lexer::tokenize(src);   // code from the target file
 
-    // for(auto it1: tokens){
-    //     intpr::showlist(it1);
-    // }
+    intpr::showlist(tokens);
     std::vector<parser::BaseNode*> *AST = new std::vector<parser::BaseNode*>();
     parser::Parser parser(&tokens, AST);
 
-    intpr::interpret(*AST);
+    //intpr::interpret(*AST);
     delete AST;
 
-    std::cout<<"\nexecution time: "<<((float)clock() - start)/1000000<<"seconds.\n";
+    std::cout<<"\nexecution time: "
+        <<((float)clock() - start)/1000000<<"seconds.\n";
 
 }
