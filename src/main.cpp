@@ -1,5 +1,6 @@
 #include<time.h>
 #include<fstream>
+#include<string>
 #include "lexer.cpp"
 #include "parser.cpp"
 #include "intpr.cpp"
