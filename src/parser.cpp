@@ -25,32 +25,37 @@ namespace parser {
     class Parser {
         private:
             int idx = 0;
-            std::vector<std::vector<lexer::Token>> *tokens = new std::vector<std::vector<lexer::Token>>();
+            std::vector<lexer::Token> *tokens = new std::vector<lexer::Token>();
 
-            inline void parse() {
-                if (tokens->at(idx)[0].token == "print") {
+            void parse() {
+                if (tokens->at(idx).token == "print") {
                     /*  print_node
                             |
                             expr    */
-                    // std::cout<<"debug: print\n";
-                    AST->push_back(new PrintNode(
-                        {tokens->at(idx)[1], tokens->at(idx).back()}));
+                    std::vector<lexer::Token> list {};
+                    while(tokens->at(idx).type == TT_EOF) {
+                        list.push_back(tokens->at(idx));
+                    }
+                    AST->push_back(new PrintNode(list));
                 }
 
-                else if (tokens->at(idx)[0].token == "store") {
+                else if (tokens->at(idx).token == "store") {
                     /* store_node
                         /    \
                         name   expr */
                     // std::cout<<"debug: store\n";
-                    AST->push_back(new StoreNode(tokens->at(idx)[1].token,
-                        {tokens->at(idx)[2], tokens->at(idx).back()}));
+                    std::vector<lexer::Token> list {};
+                    while(tokens->at(idx).type == TT_EOF) {
+                        list.push_back(tokens->at(idx));
+                    }
+                    AST->push_back(new StoreNode(tokens->at(idx).token, list));
                 }
 
-                else if (tokens->at(idx)[0].token == "if") {
+                else if (tokens->at(idx).token == "if") {
                     /*
                             if_node
-                            /   |    \
-                        cond stmts else
+                            /   |   \
+                        cond  stmts else
                     */
                     
                 }
@@ -60,7 +65,7 @@ namespace parser {
         public:
             std::vector<BaseNode*> *AST = new std::vector<BaseNode*>();
 
-            Parser(std::vector<std::vector<lexer::Token>> *tokens,
+            Parser(std::vector<lexer::Token> *tokens,
                 std::vector<BaseNode*> *AST)
             : tokens(tokens), AST(AST)
             {
