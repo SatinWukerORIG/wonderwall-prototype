@@ -56,8 +56,8 @@ namespace lexer {
                 tokens.push_back(Token(lastchar, get_type(lastchar)));
                 lastchar.clear();
 
-                // if(text[i] == '\n')
-                //     tokens.push_back(Token("\n", TT_EOF));
+                if(text[i] == '\n')
+                    tokens.push_back(Token("\n", TT_EOF));
             }
             else lastchar += text[i];
         }
