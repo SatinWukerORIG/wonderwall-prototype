@@ -1,6 +1,8 @@
 # Wonderwall
 Wonderwall is a general purpose and functional programming language without parenthese
 
+See the philosophy behind it: [basics.md](basics.md)
+
 # Run
 **All of the avaliable code is in the [src](/src) folder**
 
