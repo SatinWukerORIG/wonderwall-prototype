@@ -4,6 +4,10 @@ Wonderwall is a general purpose and functional programming language without pare
 See the philosophy behind it: [basics.md](basics.md)
 
 # Run
+Notice: this project is still in planning phase, the code written in C++ is the testing prototype, in which I ignored code quality and efficiency. Apology. Yet, the code will eventually be written in rust, and the final prototype will be published around March 1st.
+
+Currently recruiting devs who are familiar with rust, optimization, code review, OR compiler development & LLVM!!! Please contact me on discord, SatinW#0572, or join the Rickroll progamming language official server.
+
 **All of the avaliable code is in the [src](/src) folder**
 
 *make:* `clang++ -Oz main.cpp -o wonderwall.out`
@@ -18,6 +22,3 @@ Windows: `clrun`
 <br>
 Linux : `./run.sh`
 <br>
-
-
-However, clang and g++ are somehow incompatible and the code is only able to run efficiently on g++ (Recommending using clang++)
