@@ -110,15 +110,22 @@ Output:
 `Hello, World!`
 
 ## Details & Theories
-*Wonderwall* does not have programming state, unlike the object-oriented languages. Therefore, the instructions do not change the input values or any other variables throughout the program producing bug-free codes and an efficient debugging process. 
+*Wonderwall* prohibits making side-effects in instructions and functions, unlike the object-oriented languages. The instructions do not change the input values or any other variables throughout the program in order to produce less-bug codes and an efficient debugging process.
 
 # SPACE
 creates modules, libraries, for grouping instructions
 `std`, wonderwall standard library, is an example of a space.
 syntax: `space [space name]`
-let's create a space for 
+let's create a space for my own standard library
 ```
-space 
+space MyStd
+    # let's define an instruction
+    define myprint msg
+        print "myprint: " + msg
+    
+# this is the main scope
+use MyStd
+MyStd::myprint "hi mom!"
 ```
 
 # ALGORITHMS
