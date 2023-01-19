@@ -114,6 +114,7 @@ Output:
 
 # SPACE
 creates modules, libraries, for grouping instructions
+<br>
 `std`, wonderwall standard library, is an example of a space.
 syntax: `space [space name]`
 let's create a space for my own standard library
@@ -133,9 +134,9 @@ MyStd::myprint "hi mom!"
 ```
 use std
 store arr:array [10, 5, 4, 7, 9]
-store arr_len std.len(arr)
 
 define bubble_sort arr:array
+    store arr_len std::len(arr)
     for(i, arr_len)
         for(j, arr_len - i)
             std.switch(arr[j], arr[j - 1])
