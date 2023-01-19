@@ -13,12 +13,15 @@ print msg
 # DATA STRUCTURES
 ### Scalar:
 **char**: 'a'
+
 **string**: "this is a string"
 
 **bool**: true, false
 
 **u8, u16, u32, u64, u128**
+<br>
 **i8, i16, i32, i64, i128**
+<br>
 **f32 f64**
 
 **uindex, iindex**
