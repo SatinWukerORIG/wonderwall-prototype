@@ -1,5 +1,5 @@
 # Wonderwall
-The toil of writing efficient code is the job of compilers, not programmers
+Writing efficient code is the job of compilers, not the toil of programmers.
 
 # HELLO, WORLD!
 ```
