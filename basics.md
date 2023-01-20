@@ -1,6 +1,6 @@
 # Wonderwall
 The toil of writing efficient code is the job of compilers, not programmers
-Lasiness is always better than trying hard
+<br>
 Lazy and smart, that is what a compiler should be like
 
 
