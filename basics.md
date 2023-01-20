@@ -46,11 +46,17 @@ print msg
 * unordered, (value of element) unchangeable, and unindexed.
 
 ### Examples
+store instruction: assigning a value to a variable, and is able to change the defined variable
 ```
-store num1:u8 10
-store num2 12 # compiler can get type automatically
+store num1:u8 2007
+store num2 2008 # compiler can get type automatically
 store num3 num1 + num2
 ```
+remain instruction: assigningg a alue to a constant, defined in runtime
+```
+remain COOL_NUMS [8, 12, 7, 14]
+```
+
 
 # LOGICAL STATEMENTS
 ## Conditional Statements
