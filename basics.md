@@ -108,7 +108,7 @@ An **instruction** takes in inputs but does not have an output.
 Without passing to an instruction, an expression of a function would not be evaluated!
 
 ## Defining
-let's make a print-line instruction
+1. let's make a print-line instruction
 ```
 define println msg
     print msg + "\n"
@@ -117,6 +117,34 @@ and we use this instrucion
 `println "Hello, World!"`
 Output:
 `Hello, World!`
+
+2. lets make a component of calculating height
+```
+use std;
+define to_inches(cm:u16)
+    store inches:u16 cm/2.54
+    store ft inches / 12
+    return to_string(ft) + "ft " + to_string(inches - temp * 12) + "inches"
+define cal_height(cm:string)
+    return to_inches(to_u16(cm))
+
+# Main scope
+store inp:string std::io::input()
+cal_height(inp)
+```
+Notice that in this case, the compiler would only read & execute through `store inp...`
+<br>
+*Wonderwall* does not execute through any function unless it is **stored in a variable** or **passed to an instruction**
+<br>
+All the functions are pure and has no side-effect, thus they are not doing anything at all unless the data they returned are used.
+<br>
+Of course dead functions are eliminated in optimization through dead code elimination, yet this trait helps compiler to solve this problem in semantic analysis.
+```
+# so in this case bot cal_height() and to_inches() would be executed
+println(cal_height(inp))
+# OR
+store my_height:u16 cal_height(inp)
+```
 
 ## Details & Theories
 *Wonderwall* prohibits making side-effects in instructions and functions, unlike the object-oriented languages. The instructions do not change the input values or any other variables throughout the program in order to produce less-bug codes and an efficient debugging process.
