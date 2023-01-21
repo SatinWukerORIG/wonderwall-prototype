@@ -163,6 +163,26 @@ use MyStd
 MyStd::myprint "hi mom!"
 ```
 
+# COMPLEX DATATYPE
+Just like structs and enums, *Wonderwall* supports datatypes by user definition.
+
+For example, let's define an enum about directions
+```
+use std::types
+types::make_enum Direction North South West East
+```
+and...:
+```
+print Direction.North
+```
+output:
+```
+North
+```
+this is because the print instruction has the ability to parse type.
+<br>
+Although Direction.North has a type of Direction, the print instruction still parse it as a string.
+
 # ALGORITHMS
 ## Bubble Sort
 ```
