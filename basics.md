@@ -193,6 +193,7 @@ define bubble_sort arr:array
     store arr_len std::len(arr)
     for(i, arr_len)
         for(j, arr_len - i)
-            std.switch(arr[j], arr[j - 1])
+            std.switch(arr[j], arr[j - 1]) # notice that 'arr' here is a local variable
     return arr
 ```
+## 
