@@ -84,8 +84,8 @@ for [element] [iterator]
     [stmts]
 ```
 
-1. for i 0..10 # instructional
-2. for(i, 0..10) # functional
+1. `for i 0..10   # instructional`
+2. `for(i, 0..10) # functional`
 
 ### dead loop
 `while true`
