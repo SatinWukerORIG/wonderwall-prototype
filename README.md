@@ -5,7 +5,7 @@ See the philosophy behind it: [basics.md](basics.md)
 If you want to add any new feature or make any suggestions about *wonderwall*'s basics, please issue!
 
 Basic infrastructure:
-
+![](https://github.com/SatinWuker/wonderwall-prototype/blob/main/images/Compiler%20Infrastructure.png)
 
 # Run
 Notice: this project is still in planning phase, the code written in C++ is the testing prototype, in which I ignored code quality and efficiency. Apology. Yet, the code will eventually be written in rust, and the final prototype will be published around March 1st.
