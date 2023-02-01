@@ -10,6 +10,14 @@
 
 // benchmark
 #include <chrono>
+/*
+int parse_args(char** argv) {
+    if (std::strcmp(argv[1], "a")) {
+
+    }
+    return 0;
+}
+*/
 
 int main(int argc, char** argv){
 
@@ -24,7 +32,7 @@ int main(int argc, char** argv){
     buffer << text.rdbuf();
     text.close();
 
-    std::string buffer_str = buffer.str();
+    const std::string buffer_str = buffer.str();
     std::unique_ptr<Executor> exec = std::make_unique<Executor>();
     exec->src = std::make_unique<std::string>(buffer_str);
     exec->run();
@@ -32,6 +40,6 @@ int main(int argc, char** argv){
     // ---BENCHMARCH---
     auto stop = std::chrono::high_resolution_clock::now();
     auto dr=std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
-    std::cout<<"execution time: "<<dr.count()<<"ms\n";
+    std::cout<<"execution time: "<<dr.count()<<" microsecs.\n";
     // ---BENCHMARCH---
 }
