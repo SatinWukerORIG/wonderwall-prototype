@@ -4,6 +4,17 @@
 #include <vector>
 #include <algorithm>
 
+
+class Token{
+public:
+    char ttype;
+    std::string tvalue;
+    Token(char type, std::string value) {
+        ttype = type;
+        tvalue = value;
+    }
+};
+
 class Executor{
 private:
 
@@ -13,10 +24,10 @@ std::vector<std::string> symbol_table {};
 
 void tokenize() {
     unsigned short int i = 0;
-    bool is_in_quote = false;
-    std::string current_tok = "";
-    char ch = ' ';
-    while (i < src -> length()) {
+    const unsigned int src_len = src -> length();
+    std::string current_tok;
+    char ch;
+    while (i < src_len) {
         ch = (*src)[i];
         // next line
         if (ch == '\n') lines++;
@@ -25,26 +36,37 @@ void tokenize() {
             i++;
             while((*src)[i] != '\n') i++;
         }
-        // else if(ch >= '0' && ch <= '9'){
-
-        // }
-        else if(ch == '"'){
-            i++;
-            while((*src)[i] != '"' && i < src -> length()){
-                current_tok += (*src)[i];
+        // Tokenize number
+        else if (ch >= '0' && ch <= '9') {
+            while((*src)[i] >= '0' && (*src)[i] <= '9' && i < src_len){
+                current_tok.push_back((*src)[i]);
                 i++;
             }
-            std::cout<<"STR: "<<current_tok<<std::endl;
+            Token token(TT_I16, current_tok);
+            //std::cout<<"token: "<<token.ttype<<token.tvalue<<std::endl;
             current_tok.clear();
         }
+        // Tokenize string
+        else if (ch == '"') {
+            i++;
+            while((*src)[i] != '"' && i < src_len){
+                current_tok.push_back((*src)[i]);
+                i++;
+            }
+            Token token(TT_STR, current_tok);
+            //std::cout<<"token: "<<token.ttype<<token.tvalue<<std::endl;
+            current_tok.clear();
+        }
+        // Tokenize identifier
         else {
             // Identifier
             while(!std::binary_search(OPERATORS.begin(), OPERATORS.end(), (*src)[i])
-            && i < src -> length()){
-                current_tok += (*src)[i];
+            && i < src_len){
+                current_tok.push_back((*src)[i]);
                 i++;
             }
-            std::cout<<"IDFR: "<<current_tok<<std::endl;
+            Token token(TT_IDFR, current_tok);
+            //std::cout<<"token: "<<token.ttype<<token.tvalue<<std::endl;
             current_tok.clear();
         }
         i++;
