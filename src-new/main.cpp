@@ -34,7 +34,7 @@ int main(int argc, char** argv){
 
     const std::string buffer_str = buffer.str();
     std::unique_ptr<Executor> exec = std::make_unique<Executor>();
-    exec->src = std::make_unique<std::string>(buffer_str);
+    exec->src = buffer_str;
     exec->run();
 
     // ---BENCHMARCH---
