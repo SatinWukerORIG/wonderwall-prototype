@@ -27,7 +27,7 @@ void tokenize() {
     const unsigned int src_len = src.length();
     std::string current_tok;
     char ch;
-    while (i < src_len) {
+    do {
         ch = src[i];
         // next line
         if (ch == '\n') lines++;
@@ -71,6 +71,7 @@ void tokenize() {
         }
         i++;
     }
+    while (i++ < src_len);
 
 }
 public:
