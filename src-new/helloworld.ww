@@ -1,3 +1,2 @@
-store num 114514
 store msg "Hello World!"
 print msg
