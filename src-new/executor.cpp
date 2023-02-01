@@ -24,22 +24,22 @@ std::vector<std::string> symbol_table {};
 
 void tokenize() {
     unsigned short int i = 0;
-    const unsigned int src_len = src -> length();
+    const unsigned int src_len = src.length();
     std::string current_tok;
     char ch;
     while (i < src_len) {
-        ch = (*src)[i];
+        ch = src[i];
         // next line
         if (ch == '\n') lines++;
         // comment
         else if(ch == '#'){
             i++;
-            while((*src)[i] != '\n') i++;
+            while(src[i] != '\n') i++;
         }
         // Tokenize number
         else if (ch >= '0' && ch <= '9') {
-            while((*src)[i] >= '0' && (*src)[i] <= '9' && i < src_len){
-                current_tok.push_back((*src)[i]);
+            while(src[i] >= '0' && src[i] <= '9' && i < src_len){
+                current_tok.push_back(src[i]);
                 i++;
             }
             Token token(TT_I16, current_tok);
@@ -49,8 +49,8 @@ void tokenize() {
         // Tokenize string
         else if (ch == '"') {
             i++;
-            while((*src)[i] != '"' && i < src_len){
-                current_tok.push_back((*src)[i]);
+            while(src[i] != '"' && i < src_len){
+                current_tok.push_back(src[i]);
                 i++;
             }
             Token token(TT_STR, current_tok);
@@ -60,9 +60,9 @@ void tokenize() {
         // Tokenize identifier
         else {
             // Identifier
-            while(!std::binary_search(OPERATORS.begin(), OPERATORS.end(), (*src)[i])
+            while(!std::binary_search(OPERATORS.begin(), OPERATORS.end(), src[i])
             && i < src_len){
-                current_tok.push_back((*src)[i]);
+                current_tok.push_back(src[i]);
                 i++;
             }
             Token token(TT_IDFR, current_tok);
@@ -74,7 +74,7 @@ void tokenize() {
 
 }
 public:
-    std::unique_ptr<std::string> src;
+    std::string src;
 
     void run() {
         tokenize();
