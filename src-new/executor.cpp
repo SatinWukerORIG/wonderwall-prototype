@@ -9,7 +9,7 @@ class Token{
 public:
     char ttype;
     std::string tvalue;
-    Token(char type, std::string value) {
+    Token(char type, std::string value): ttype(type), tvalue(value) {
         ttype = type;
         tvalue = value;
     }
