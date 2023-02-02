@@ -1,4 +1,4 @@
-/*Included by all files. Contains all constants*/
+/*Included by all files. Contains all constexprants*/
 #pragma once
 #include <iostream>
 #include <string>
@@ -13,18 +13,20 @@ const std::vector<char> OPERATORS {
     '+', ',', '-', '.', '/', ':',
     '<', '>', '[', ']'
 };
+
 // TT: Token Types
-const char TT_STR = '0';
-const char TT_I8 = '1';
-const char TT_I16 = '2';
-const char TT_I32 = '3';
-const char TT_I64 = '4';
-const char TT_I128 = '5';
-const char TT_IINDEX = '6';
-const char TT_U8 = '7';
-const char TT_U16 = '8';
-const char TT_U32 = '9';
-const char TT_U64 = 'A';
-const char TT_U128 = 'B';
-const char TT_UIINDEX = 'C';
-const char TT_IDFR = 'D';
+constexpr char TT_STR = 'S';
+constexpr char TT_I8 = '1';
+constexpr char TT_I16 = '2';
+constexpr char TT_I32 = '3';
+constexpr char TT_I64 = '4';
+constexpr char TT_I128 = '5';
+constexpr char TT_IINDEX = '6';
+constexpr char TT_U8 = '7';
+constexpr char TT_U16 = '8';
+constexpr char TT_U32 = '9';
+constexpr char TT_U64 = 'A';
+constexpr char TT_U128 = 'B';
+constexpr char TT_UIINDEX = 'C';
+constexpr char TT_IDFR = 'D';
+constexpr char TT_OP = 'O';
