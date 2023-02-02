@@ -32,7 +32,7 @@ void tokenize() {
         // comment
         else if(ch == '#'){
             i++;
-            while((*src)[i] != '\n') i++;
+            while((*src)[i] != '\n' && i < src_len) i++;
         }
         // Tokenize number
         else if (ch > 47 && ch < 58) {
