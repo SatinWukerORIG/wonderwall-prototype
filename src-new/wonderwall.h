@@ -1,21 +1,24 @@
 /*Included by all files. Contains all constexprants*/
 #pragma once
-#include <iostream>
 #include <string>
-#include <cstring>
-#include <vector>
-
 /* operators, sorted according their ascii values
 this is for performing binary search in tokenize()
 */
-const std::vector<char> OPERATORS {
+constexpr char DELIMITERS[17] {
     '\n', ' ', '%','\'', '(', ')', '*',
     '+', ',', '-', '.', '/', ':',
     '<', '>', '[', ']'
 };
 
-// TT: Token Types
+constexpr char OPERATORS[13] {
+    '%', '(', ')', '*',
+    '+', '-', '.', '/', ':',
+    '<', '>', '[', ']'
+};
+
+/* TT: Token Types */
 constexpr char TT_STR = 'S';
+
 constexpr char TT_I8 = '1';
 constexpr char TT_I16 = '2';
 constexpr char TT_I32 = '3';
@@ -28,5 +31,9 @@ constexpr char TT_U32 = '9';
 constexpr char TT_U64 = 'A';
 constexpr char TT_U128 = 'B';
 constexpr char TT_UIINDEX = 'C';
-constexpr char TT_IDFR = 'D';
-constexpr char TT_OP = 'O';
+
+constexpr char TT_DELI = 'D';    // delimeter
+constexpr char TT_OP = 'O';      // operator
+constexpr char TT_IDFR = 'I';    // identifier
+
+constexpr char TT_WTH = 'W';     // ???
