@@ -117,7 +117,7 @@ Output:
 
 2. lets make a component of calculating height
 ```
-use std;
+use std
 define to_inches(cm:u16)
     store inches:u16 cm/2.54
     store ft inches / 12
