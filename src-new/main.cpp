@@ -39,6 +39,6 @@ int main(int argc, char** argv){
     // ---BENCHMARCH---
     auto stop = std::chrono::high_resolution_clock::now();
     auto dr=std::chrono::duration_cast<std::chrono::microseconds>(stop-start);
-    std::cout<<"execution time: "<<dr.count()<<" microsecs.\n";
+    printf("execution time: %lld microsecs.\n", dr.count());
     // ---BENCHMARCH---
 }
