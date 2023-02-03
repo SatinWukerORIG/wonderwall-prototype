@@ -55,7 +55,7 @@ remain COOL_NUMS [8, 12, 7, 14]
 ```
 
 
-# LOGICAL STATEMENTS
+# CONTROLLING STATEMENTS
 ## Conditional Statements
 ### if statement
 ```
