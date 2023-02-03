@@ -1,12 +1,15 @@
-class ExprAST{};
+namespace trees {
 
-class NumAST: ExprAST{};
+class BaseNode{};
 
-class VariableAST: ExprAST{};
+class NumAST: BaseNode{};
 
-class BinExprAST: ExprAST{};
+class VariableAST: BaseNode{};
 
-class ChainExprAST: ExprAST{};
+class BinBaseNode: BaseNode{};
 
-class IfAST: ExprAST{};
+class ChainBaseNode: BaseNode{};
 
+class IfAST: BaseNode{};
+
+}
