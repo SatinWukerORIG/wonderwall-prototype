@@ -17,7 +17,7 @@ constexpr char OPERATORS[13] {
 };
 
 /* TT: Token Types */
-constexpr char TT_STR = 'S';
+constexpr char TT_STR = 'S';    // string
 
 constexpr char TT_I8 = '1';
 constexpr char TT_I16 = '2';
@@ -35,5 +35,6 @@ constexpr char TT_UIINDEX = 'C';
 constexpr char TT_DELI = 'D';    // delimeter
 constexpr char TT_OP = 'O';      // operator
 constexpr char TT_IDFR = 'I';    // identifier
+constexpr char TT_KW = 'K';      // Keyword
 
 constexpr char TT_WTH = 'W';     // ???
