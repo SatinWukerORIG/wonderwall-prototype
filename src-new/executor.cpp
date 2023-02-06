@@ -1,31 +1,69 @@
 #pragma once
 #include "wonderwall.h"
-#include "trees.cpp"
+#include "parser.cpp"
 #include <memory>
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
-
-class Token{
-public:
-    char ttype;
-    std::string tvalue;
-    Token(char type, std::string value): ttype(type), tvalue(value) {}
-};
 
 class Executor{
 private:
 
 unsigned short int lines = 0;
-std::vector<std::string> symbol_table {};
+
+std::vector<std::vector<parser::Token>> ast; // abstract syntax tree
+
+inline void parse_keywords(std::string &cur_idfr) {
+    if (cur_idfr == "print") {
+        ast.emplace_back(parser::make_print_tree(parser::Token('W',"")));
+    }
+    else if (cur_idfr == "store") {
+        ast.emplace_back(parser::make_store_tree(
+            parser::Token('I', ""),
+            parser::Token('W', ""))
+        );
+    }
+    else { // identifier: variable/func/... name
+        //ast.back()[1] = cur_tok;
+        parse_idfr(cur_idfr);
+    }
+}
+
+inline void parse_idfr(std::string cur_idfr) { // parse identifier
+    if (ast.back()[0].tvalue == "print"){
+        std::cout<<"print identifier: "<<cur_idfr<<std::endl;
+    }
+    else if (ast.back()[0].tvalue == "store"){
+        std::cout<<"store identifier: "<<cur_idfr<<std::endl;
+    }
+}
+
+inline void parse_string(std::string& cur_string) {
+    if(ast.back()[0].tvalue == "print"){
+        ast.back()[1] = parser::Token('S', cur_string);
+        std::cout<<"print string: "<<ast.back()[1].tvalue<<std::endl;
+    }
+    else if(ast.back()[0].tvalue == "store"){
+        ast.back()[2] = parser::Token('S', cur_string);
+        std::cout<<"store string: "<<ast.back()[2].tvalue<<std::endl;
+    }
+}
+
+inline void parse_num(std::string& cur_num) {
+    if(ast.back()[0].tvalue == "print"){
+        ast.back()[1] = parser::Token('2', cur_num);
+        std::cout<<"print num: "<<ast.back()[1].tvalue<<std::endl;
+    }
+    else if(ast.back()[0].tvalue == "store"){
+        ast.back()[2] = parser::Token('2', cur_num);
+        std::cout<<"store num: "<<ast.back()[2].tvalue<<std::endl;
+    }
+}
 
 void tokenize() {
-
-    std::vector<trees::BaseNode> cur_tree;
-    cur_tree.reserve(10);
-
-    unsigned short int treevec_idx = 0;
+    ast.reserve(10);
 
     const unsigned int src_len = src -> length();
     std::string current_tok; // store the current token
@@ -53,8 +91,9 @@ void tokenize() {
                 current_tok.push_back((*src)[i]);
                 i++;
             }
-            Token token(TT_I16, current_tok);
-            printf("TT_I16 %s\n", current_tok.c_str());
+            // parse number
+            parse_num(current_tok);
+
             current_tok.clear();
             current_tok.shrink_to_fit();
         }
@@ -66,8 +105,9 @@ void tokenize() {
                 current_tok.push_back((*src)[i]);
                 i++;
             }
-            Token token(TT_STR, current_tok);
-            printf("TT_STR %s\n", current_tok.c_str());
+            // parse string
+            parse_string(current_tok);
+
             current_tok.clear();
             current_tok.shrink_to_fit();
         }
@@ -81,29 +121,31 @@ void tokenize() {
                 i++;
             }
             // if ch is a delimiter and does not equal to \n or space:
-            if((*src)[i] != ' ' && (*src)[i] != '\n')
+            if((*src)[i] != ' ' && (*src)[i] != '\n'){
                 printf("TT_DELI %c\n", (*src)[i]);
+            }
 
-            Token token(TT_IDFR, current_tok);
-            printf("TT_IDFR %s\n", current_tok.c_str());
+            parse_keywords(current_tok);
             current_tok.clear();
             current_tok.shrink_to_fit();
         }
         // Operator
         else if(std::binary_search(std::begin(OPERATORS), std::end(OPERATORS), ch))
         {
-            if(ch != ' ')
+            if(ch != ' '){
                 printf("TT_OP %c\n", ch);
+            }
         }
         // Delimiter
         else if(std::binary_search(std::begin(DELIMITERS), std::end(DELIMITERS), ch))
         {
-            if(ch != ' ')
+            if(ch != ' '){
                 printf("TT_DELI %c\n", ch);
+            }
         }
         // What the heck?
         else{
-            printf("TT_WTH %c\n", ch);
+            //printf("TT_WTH %c\n", ch);
         }
     }
 
