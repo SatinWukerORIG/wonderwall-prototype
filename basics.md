@@ -45,8 +45,8 @@ print msg
 ### Examples
 store instruction: assigning a value to a variable, and is able to change the defined variable
 ```
-store num1:u8 2007
-store num2 2008 # compiler can get type automatically
+store num1:u8 7
+store num2 8 # compiler can get type automatically
 store num3 num1 + num2
 ```
 remain instruction: assigning a alue to a constant, defined in runtime
@@ -138,7 +138,7 @@ All the functions are pure and has no side-effect, thus they are not doing anyth
 Of course dead functions are eliminated in optimization through dead code elimination, yet this trait helps compiler to solve this problem in semantic analysis.
 ```
 # so in this case bot cal_height() and to_inches() would be executed
-println(cal_height(inp))
+print cal_height(inp)
 # OR
 store my_height:u16 cal_height(inp)
 ```
@@ -191,9 +191,9 @@ store arr:array [10, 5, 4, 7, 9]
 
 define bubble_sort arr:array
     store arr_len std::len(arr)
-    for(i, arr_len)
-        for(j, arr_len - i)
-            std.switch(arr[j], arr[j - 1]) # notice that 'arr' here is a local variable
+    for i, arr_len
+        for j, arr_len - i
+            std.switch arr[j] arr[j - 1] # notice that 'arr' here is a local variable
     return arr
 ```
 ## 
