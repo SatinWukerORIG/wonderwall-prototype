@@ -8,13 +8,13 @@ Basic infrastructure:
 ![](https://github.com/SatinWuker/wonderwall-prototype/blob/main/images/Compiler%20Infrastructure.png)
 
 # Run - New Code
-The new code is in the [src-new](/src-new)
+The new code is in the [src-new](src-new)
 <br>
 The new code is developed only with Clang++.
 
-**Windows:** `[build](/src-new/build.bat)`
+**Windows:** `build`
 <br>
-**Linux:** `chmod u+x [build.sh](/src-new/build.sh)`
+**Linux:** `chmod u+x build.sh`
 <br>
 `./build.sh`
 
