@@ -1,5 +1,6 @@
 /*Included by all files. Contains all constexprants*/
 #pragma once
+#include <iostream>
 #include <string>
 /* operators, sorted according their ascii values
 this is for performing binary search in tokenize()
@@ -35,6 +36,7 @@ constexpr char TT_UIINDEX = 'C';
 constexpr char TT_DELI = 'D';    // delimeter
 constexpr char TT_OP = 'O';      // operator
 constexpr char TT_IDFR = 'I';    // identifier
-constexpr char TT_KW = 'K';      // Keyword
+// constexpr char TT_KW = 'K';      // Keyword
 
 constexpr char TT_WTH = 'W';     // ???
+constexpr char TT_EOF = 'E';
